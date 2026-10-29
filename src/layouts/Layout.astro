@@ -1,4 +1,11 @@
 ---
+// Fonts are self-hosted from Fontsource, only the weights the design uses.
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/inter/600.css';
+import '@fontsource/poppins/500.css';
+import '@fontsource/poppins/600.css';
+import '@fontsource/poppins/700.css';
 import '../styles/global.css';
 
 interface Props {
@@ -33,9 +40,6 @@ const image = new URL('/images/avatar.png', Astro.site);
     <meta name="twitter:site" content="@jstevenfm" />
     <meta name="twitter:creator" content="@jstevenfm" />
     <meta name="google-site-verification" content="1JwxxV7D7Sd_OXEKlc8IlNw7os50wAXtSeO6PYod4EI" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" />
     <script is:inline>
       // Apply the saved theme before first paint so the page never flashes the other theme.
       try {
