@@ -103,6 +103,8 @@ img { max-width: 100%; }
 
 .band {
   position: relative;
+  /* Halos overflow their section on purpose; clip them sideways so phones never get a horizontal scroll. */
+  overflow-x: clip;
   padding-left: max(var(--pad), env(safe-area-inset-left, 0px));
   padding-right: max(var(--pad), env(safe-area-inset-right, 0px));
 }
@@ -283,6 +285,8 @@ img { max-width: 100%; }
 .card { display: flex; flex-direction: column; gap: 16px; min-width: 0; padding: var(--card-pad); border-radius: var(--radius-card); }
 .card h3 { font-family: var(--font-display); font-weight: 600; font-size: var(--h3); line-height: 1.25; overflow-wrap: anywhere; }
 /* A one-word title (a domain) shrinks with the viewport instead of breaking mid-word. */
+/* Tablet keeps two columns, so the title fits half the row minus the card padding. */
+@media (min-width: 700px) and (max-width: 1099px) { .card h3.card__url { font-size: min(var(--h3), calc(((100vw - 88px) / 2 - 64px) / 14.5)); overflow-wrap: normal; white-space: nowrap; } }
 @media (max-width: 699px) { .card h3.card__url { font-size: min(var(--h3), calc((100vw - 96px) / 14.5)); overflow-wrap: normal; white-space: nowrap; } }
 .card p { color: var(--muted); }
 .card--project { transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease; }
