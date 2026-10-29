@@ -1,17 +1,16 @@
 {
-  "name": "clone-my-landing-page-astro-tailwind",
+  "name": "jstevenfm-portfolio",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "private": true,
   "scripts": {
     "dev": "astro dev",
-    "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/tailwind": "^5.0.0",
-    "astro": "^4.11.1",
-    "tailwindcss": "^3.0.24"
+    "astro": "^7.4.4",
+    "three": "^0.186.1"
   }
 }

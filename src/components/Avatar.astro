@@ -1,0 +1,22 @@
+---
+// 3D avatar stage. The PNG shows first and stays as the fallback when WebGL or the models are unavailable.
+import { text } from '../i18n/copy';
+
+interface Props {
+  contact?: boolean;
+}
+
+const { contact = false } = Astro.props;
+---
+
+<div class:list={['avatar', { 'avatar--contact': contact }]} data-avatar>
+  <img src="/images/avatar.png" alt={text('es', 'avatarAlt')} data-i18n-attr="alt:avatarAlt" width="800" height="800" loading={contact ? 'lazy' : 'eager'} />
+  <slot />
+</div>
+
+<script>
+  // three.js is large, so it loads once the page is idle instead of blocking the first render.
+  const load = () => import('../scripts/avatar').then((m) => m.start()).catch(() => { /* The PNG stays visible. */ });
+  if ('requestIdleCallback' in window) requestIdleCallback(load, { timeout: 2000 });
+  else setTimeout(load, 300);
+</script>

@@ -1,0 +1,20 @@
+---
+import { COPY } from '../i18n/copy';
+import { projectsHtml, progressHtml } from '../lib/templates';
+---
+
+<section class="band section" id="proyectos" aria-labelledby="proj-title">
+  <div class="halo halo--mint" style="width: 480px; height: 480px; left: -160px; top: 300px; opacity: var(--halo-mint-soft);"></div>
+  <div class="halo halo--lav" style="width: 420px; height: 420px; right: -140px; bottom: 120px; opacity: var(--halo-lav-soft);"></div>
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow" data-i18n="projEyebrow">Proyectos</p>
+      <h2 class="h2" id="proj-title" data-i18n="projTitle">Trabajo reciente</h2>
+    </div>
+    <ul class="grid-2" id="projects" set:html={projectsHtml(COPY.es)} />
+    <div class="progress">
+      <h3 data-i18n="progTitle">En construcción</h3>
+      <ul class="grid-2" id="progress" set:html={progressHtml(COPY.es)} />
+    </div>
+  </div>
+</section>

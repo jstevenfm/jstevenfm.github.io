@@ -1,0 +1,46 @@
+---
+
+---
+
+<div class="band nav-band">
+<nav class="nav" aria-label="Principal" data-i18n-attr="aria-label:navLabel">
+  <a class="nav__logo" href="#top" aria-label="jstevenfm">
+    <img class="logo-light" src="/images/logo-light.svg" alt="jstevenfm" width="155" height="26">
+    <img class="logo-dark" src="/images/logo-dark.svg" alt="jstevenfm" width="155" height="26">
+  </a>
+  <ul class="nav__links">
+    <li><a href="#servicios" data-i18n="nav.services">Servicios</a></li>
+    <li><a href="#proyectos" data-i18n="nav.projects">Proyectos</a></li>
+    <li><a href="#sobre-mi" data-i18n="nav.about">Sobre mí</a></li>
+    <li><button type="button" class="is-soon js-soon">Blog <span class="soon-tag" data-i18n="nav.soon">Pronto</span></button></li>
+    <li><a href="#contacto" data-i18n="nav.contact">Contacto</a></li>
+  </ul>
+  <div class="nav__tools">
+    <div class="lang" role="group" aria-label="Idioma" data-i18n-attr="aria-label:langLabel">
+      <button type="button" data-lang="es" aria-pressed="true">ES</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+    <button type="button" class="icon-btn" id="theme-toggle" aria-label="Cambiar tema" data-i18n-attr="aria-label:themeLabel">
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg>
+    </button>
+    <button type="button" class="icon-btn menu-btn" id="menu-toggle" aria-expanded="false" aria-controls="menu-panel" aria-label="Abrir menú" data-i18n-attr="aria-label:menuLabel">
+      <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M4 8h16M4 16h16"></path></svg>
+      <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg>
+    </button>
+  </div>
+</nav>
+<div class="menu-panel glass" id="menu-panel" hidden>
+  <a href="#servicios" data-i18n="nav.services">Servicios</a>
+  <a href="#proyectos" data-i18n="nav.projects">Proyectos</a>
+  <a href="#sobre-mi" data-i18n="nav.about">Sobre mí</a>
+  <button type="button" class="menu-link is-soon js-soon">Blog <span class="soon-tag" data-i18n="nav.soon">Pronto</span></button>
+  <a href="#contacto" data-i18n="nav.contact">Contacto</a>
+  <div class="menu-panel__lang">
+    <div class="lang" role="group" aria-label="Idioma" data-i18n-attr="aria-label:langLabel">
+      <button type="button" data-lang="es" aria-pressed="true">ES</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </div>
+</div>
+</div>

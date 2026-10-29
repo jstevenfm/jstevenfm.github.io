@@ -1,0 +1,23 @@
+---
+import { COPY, text } from '../i18n/copy';
+import { stepsHtml } from '../lib/templates';
+---
+
+<section class="band section" id="sobre-mi" aria-labelledby="about-title">
+  <div class="halo halo--lav" style="width: 380px; height: 380px; right: 40px; top: 160px; opacity: var(--halo-lav-soft);"></div>
+  <div class="wrap about__grid">
+    <div class="about__text">
+      <p class="eyebrow" data-i18n="aboutEyebrow">Sobre mí</p>
+      <h2 class="h2" id="about-title" data-i18n="aboutTitle">De los datos al código</h2>
+      <p data-i18n="aboutP1">{text('es', 'aboutP1')}</p>
+      <p data-i18n="aboutP2">{text('es', 'aboutP2')}</p>
+    </div>
+    <div class="card about__card glass">
+      <div class="stat">
+        <p class="stat__num" data-i18n="statNum">+3</p>
+        <p data-i18n="statLabel">años construyendo proyectos como programador</p>
+      </div>
+      <ol class="steps" id="steps" set:html={stepsHtml(COPY.es)} />
+    </div>
+  </div>
+</section>

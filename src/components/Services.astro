@@ -1,0 +1,16 @@
+---
+import { COPY } from '../i18n/copy';
+import { servicesHtml } from '../lib/templates';
+---
+
+<section class="band section" id="servicios" aria-labelledby="svc-title">
+  <div class="halo halo--mint" style="width: 420px; height: 420px; right: -120px; top: 240px; opacity: var(--halo-mint-soft);"></div>
+  <div class="halo halo--lav" style="width: 360px; height: 360px; left: -120px; bottom: -80px; opacity: var(--halo-lav-soft);"></div>
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow" data-i18n="svcEyebrow">Servicios</p>
+      <h2 class="h2" id="svc-title" data-i18n="svcTitle">Qué puedo hacer por ti</h2>
+    </div>
+    <ul class="grid-2" id="services" set:html={servicesHtml(COPY.es)} />
+  </div>
+</section>
