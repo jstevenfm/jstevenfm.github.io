@@ -1,11 +1,30 @@
 ---
-import AnchorsSections from "../components/AnchorsSections.astro";
-import MainSections from "../components/MainSections.astro";
-import Presentation from "../components/Presentation.astro";
-import Layout from "../layouts/Layout.astro"
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import Services from '../components/Services.astro';
+import Projects from '../components/Projects.astro';
+import About from '../components/About.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
 ---
 
-<Layout title="JStevenfm | Desarrollador Web. Frontend, JavaScript, React, Astro, CSS">
-  <Presentation />
-  <MainSections />
+<Layout
+  title="jstevenfm · Full-stack developer, IA y automatización"
+  description="Soluciones digitales a la medida: sitios web, sistemas internos, automatizaciones y productos con IA."
+>
+  <Nav />
+  <main id="top">
+    <Hero />
+    <Services />
+    <Projects />
+    <About />
+    <Contact />
+  </main>
+  <Footer />
+  <p class="toast glass" id="toast" role="status" aria-live="polite" hidden></p>
 </Layout>
+
+<script>
+  import '../scripts/site';
+</script>
