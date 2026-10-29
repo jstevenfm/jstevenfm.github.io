@@ -10,7 +10,17 @@ const { contact = false } = Astro.props;
 ---
 
 <div class:list={['avatar', { 'avatar--contact': contact }]} data-avatar>
-  <img src="/images/avatar.png" alt={text('es', 'avatarAlt')} data-i18n-attr="alt:avatarAlt" width="800" height="800" loading={contact ? 'lazy' : 'eager'} />
+  <img
+    src="/images/avatar-800.webp"
+    srcset="/images/avatar-400.webp 400w, /images/avatar-800.webp 800w"
+    sizes={contact ? '(max-width: 699px) calc(100vw - 80px), 420px' : '(max-width: 699px) calc(100vw - 32px), (max-width: 1099px) 460px, 540px'}
+    alt={text('es', 'avatarAlt')}
+    data-i18n-attr="alt:avatarAlt"
+    width="800"
+    height="800"
+    loading={contact ? 'lazy' : 'eager'}
+    fetchpriority={contact ? 'auto' : 'high'}
+  />
   <slot />
 </div>
 
