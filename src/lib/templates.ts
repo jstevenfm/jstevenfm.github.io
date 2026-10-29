@@ -13,7 +13,7 @@ function tags(list: string[]): string {
 
 export function servicesHtml(c: Copy): string {
   return c.services.map((s) =>
-    '<li class="card card--service glass"><img src="/images/icon-' + s[0] + '.png" alt="" width="112" height="112" loading="lazy"><h3>' + esc(s[1]) + '</h3><p>' + esc(s[2]) + '</p></li>'
+    '<li class="card card--service glass"><img src="/images/icon-' + s[0] + '-256.webp" srcset="/images/icon-' + s[0] + '-128.webp 128w, /images/icon-' + s[0] + '-256.webp 256w" sizes="112px" alt="" width="112" height="112" loading="lazy" decoding="async"><h3>' + esc(s[1]) + '</h3><p>' + esc(s[2]) + '</p></li>'
   ).join('');
 }
 
