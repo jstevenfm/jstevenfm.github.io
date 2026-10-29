@@ -7,6 +7,10 @@ import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.j
 
 const stages = [...document.querySelectorAll('[data-avatar]')];
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+// Phones and tablets render at a lower resolution and frame rate to keep scrolling smooth.
+const touch = window.matchMedia('(hover: none), (max-width: 699px)').matches;
+const FRAME_MS = touch ? 1000 / 30 : 0;
+const MAX_DPR = touch ? 1.5 : 2;
 
 // Shared pointer: mouse, pen or finger. After 2.5 s without input the avatar moves on its own.
 const pointer = { x: 0, y: 0, last: -Infinity };
@@ -86,21 +90,34 @@ function buildRig(model, skinMaterial) {
   return { head, eyes, headY: head.position.y, torso, torsoY: torso.position.y };
 }
 
+// Lid caps are built once per eye size and closure step, then reused, so blinking allocates nothing.
+const LID_STEPS = 16;
+const lidCache = new Map();
+function lidGeometry(radius, step) {
+  const key = radius.toFixed(4) + ':' + step;
+  let geo = lidCache.get(key);
+  if (!geo) {
+    const theta = THREE.MathUtils.lerp(1.17, 2.1, step / LID_STEPS);
+    geo = new THREE.SphereGeometry(radius, 40, 14, 0, Math.PI * 2, 0, theta);
+    lidCache.set(key, geo);
+  }
+  return geo;
+}
+
 function setLid(eye, closed) {
   // The lid is a skin-colored cap over the eyeball; its lower edge drops as it closes.
-  const theta = THREE.MathUtils.lerp(1.17, 2.1, closed);
-  if (Math.abs(theta - eye.theta) < 0.002) return;
-  eye.theta = theta;
-  eye.lid.geometry.dispose();
-  eye.lid.geometry = new THREE.SphereGeometry(eye.radius, 40, 14, 0, Math.PI * 2, 0, theta);
+  const step = Math.round(closed * LID_STEPS);
+  if (step === eye.theta) return;
+  eye.theta = step;
+  eye.lid.geometry = lidGeometry(eye.radius, step);
   if (eye.lash) eye.lash.position.y = eye.lashY - closed * 0.12;
 }
 
 class Avatar {
   constructor(stage, template, skinMaterial) {
     this.stage = stage;
-    this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    this.renderer = new THREE.WebGLRenderer({ antialias: !touch, alpha: true, powerPreference: 'low-power' });
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, MAX_DPR));
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = 1;
@@ -131,7 +148,7 @@ class Avatar {
     this.blink = { next: 1.5 + Math.random() * 2, t: -1, double: false };
     this.brow = { next: 3 + Math.random() * 4, t: -1, value: 0 };
     this.visible = true;
-    new IntersectionObserver(([e]) => { this.visible = e.isIntersecting; }, { rootMargin: '120px' }).observe(stage);
+    new IntersectionObserver(([e]) => { this.visible = e.isIntersecting; }, { rootMargin: '0px' }).observe(stage);
     new ResizeObserver(() => this.resize()).observe(stage);
     this.resize();
     stage.classList.add('is-live');
@@ -220,6 +237,15 @@ class Avatar {
   render() { this.renderer.render(this.scene, this.camera); }
 }
 
+// Low-end devices and data savers keep the static image instead of the 3D avatar.
+function canRun3D() {
+  const nav = navigator;
+  if (nav.connection && nav.connection.saveData) return false;
+  if (nav.deviceMemory && nav.deviceMemory < 4) return false;
+  if (nav.hardwareConcurrency && nav.hardwareConcurrency < 4) return false;
+  return hasWebGL();
+}
+
 function hasWebGL() {
   try { const c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')); } catch (e) { return false; }
 }
@@ -246,7 +272,7 @@ function replaceBeard(scene, beardScene) {
 }
 
 export async function start() {
-  if (!stages.length || !hasWebGL()) return;
+  if (!stages.length || !canRun3D()) return;
   const [gltf, beardGltf] = await Promise.all([loadModel('/models/avatar.glb'), loadModel('/models/beard.glb')]);
   const template = gltf.scene;
   replaceBeard(template, beardGltf.scene);
@@ -258,13 +284,14 @@ export async function start() {
   const t0 = performance.now();
   let last = t0;
   function frame(now) {
+    requestAnimationFrame(frame);
+    if (now - last < FRAME_MS - 1) return;
     const dt = Math.min((now - last) / 1000, 0.05);
     const t = (now - t0) / 1000;
     last = now;
     if (!document.hidden) {
       for (const a of avatars) { if (a.visible) { a.update(dt, t); a.render(); } }
     }
-    requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
 }
