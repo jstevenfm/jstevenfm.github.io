@@ -1,10 +1,12 @@
 import { defineConfig } from 'astro/config';
 
-import tailwind from "@astrojs/tailwind";
-
 // https://astro.build/config
 export default defineConfig({
-  integrations: [tailwind()],
-  site: 'https://jstevenfm.github.io',
-  base: '/',
+  site: 'https://jstevenfm.com',
+  vite: {
+    build: {
+      // three.js (~630 kB) is its own lazily imported chunk, so it never blocks the first render.
+      chunkSizeWarningLimit: 700,
+    },
+  },
 });
